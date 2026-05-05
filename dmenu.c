@@ -676,6 +676,9 @@ setup(void)
 		y = topbar ? 0 : wa.height - mh;
 		mw = wa.width;
 	}
+	x += sidepad;
+	y += topbar ? vertpad : -vertpad;
+	mw -= 2 * sidepad;
 	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
 	inputw = mw / 3; /* input width: ~33% of monitor width */
 	match();

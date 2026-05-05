@@ -1,0 +1,41 @@
+From 6085109 Mon Sep 17 00:00:00 2001
+From: OpenCode <opencode@local>
+Date: Tue, 5 May 2026 00:00:00 +0000
+Subject: [PATCH] add barpadding configuration
+
+Adds vertpad and sidepad configuration options to offset dmenu from the
+screen edge like dwm's barpadding patch.
+---
+ config.def.h | 2 ++
+ dmenu.c      | 3 +++
+ 2 files changed, 5 insertions(+)
+
+diff --git a/config.def.h b/config.def.h
+index 1edb647..2882be1 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -2,6 +2,8 @@
+ /* Default settings; can be overriden by command line. */
+ 
+ static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
++static const int vertpad = 0;               /* vertical padding of bar                        */
++static const int sidepad = 0;               /* horizontal padding of bar                      */
+ /* -fn option overrides fonts[0]; default X11 font or font set */
+ static const char *fonts[] = {
+ 	"monospace:size=10"
+diff --git a/dmenu.c b/dmenu.c
+index 363d19f..a1fb2f3 100644
+--- a/dmenu.c
++++ b/dmenu.c
+@@ -676,6 +676,9 @@ setup(void)
+ 		y = topbar ? 0 : wa.height - mh;
+ 		mw = wa.width;
+ 	}
++	x += sidepad;
++	y += topbar ? vertpad : -vertpad;
++	mw -= 2 * sidepad;
+ 	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
+ 	inputw = mw / 3; /* input width: ~33% of monitor width */
+ 	match();
+-- 
+2.50.0
